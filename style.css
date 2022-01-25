@@ -7,6 +7,10 @@
     border-style: solid ;
     border-width: 2px;
 }
+.result{
+  color: red;
+  font-weight: bold;
+}
 .chosen{
     transition: all 0.15s;
     border-style: solid  ;
@@ -23,10 +27,10 @@
 }
 .text{
     font-weight: bold;
-    font-size:16px;
-    color:#0000ff;
+    font-size:18px;
+    color:skyblue;
     text-align: center;
-
+    margin: 3px 2px
 }
 
 
@@ -34,54 +38,6 @@
     text-align: center;
     position: relative;
     margin-top: 20px
-}
-
-#msform fieldset .form-card {
-    background: white;
-    border: 0 none;
-    border-radius: 0px;
-    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-    padding: 20px 40px 30px 40px;
-    box-sizing: border-box;
-    width: 94%;
-    margin: 0 3% 20px 3%;
-    position: relative
-}
-
-#msform fieldset {
-    background: white;
-    border: 0 none;
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0;
-    padding-bottom: 20px;
-    position: relative
-}
-
-#msform fieldset:not(:first-of-type) {
-    display: none
-}
-
-#msform fieldset .form-card {
-    text-align: left;
-    color: #9E9E9E
-}
-
-#msform input,
-#msform textarea {
-    padding: 0px 8px 4px 8px;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 25px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    font-family: montserrat;
-    color: #2C3E50;
-    font-size: 16px;
-    letter-spacing: 1px
 }
 
 #msform input:focus,
@@ -105,6 +61,10 @@
     cursor: pointer;
     padding: 10px 5px;
     margin: 10px 5px
+}
+#msform .nextStep{
+    margin: 3px 2px;
+    background: gray;
 }
 
 #msform .action-button:hover,
@@ -198,6 +158,12 @@ select.list-dt:focus {
     top: 25px;
     z-index: -1
 }
+
+
+#progressbar .error {
+    color: red
+}
+
 #progressbar #question1:before {
     font-family: FontAwesome;
     content: "\f023"
@@ -245,37 +211,6 @@ select.list-dt:focus {
     background: skyblue
 }
 
-.radio-group {
-    position: relative;
-    margin-bottom: 25px
-}
-
-.radio {
-    display: inline-block;
-    width: 204px;
-    height: 104px;
-    border-radius: 0;
-    background: lightblue;
-    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-    cursor: pointer;
-    margin: 8px 2px
-}
-
-.radio:hover {
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
-}
-
-.radio.selected {
-    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
-}
-
-.fit-image {
-    width: 100%;
-    object-fit: cover
-}
-
-
 h1{
     font-weight: 300;
     margin: 0px;
@@ -316,4 +251,23 @@ h1{
     position: relative;
     height: 200px;
     margin-top: 40px;
+}
+
+
+
+
+.wrongAnswer {
+    list-style-type: none;
+    font-size: 12px;
+    width: 3%;
+    float: left;
+    position: relative;
+
+    height: 10px;
+    display: block;
+    color: red;
+    background: red;
+    border-radius: 2%;
+    margin: 0 auto 10px auto;
+    padding: 2px
 }
