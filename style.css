@@ -1,3 +1,4 @@
+
 .question{
     font-weight: bold;
 }
@@ -165,36 +166,6 @@ select.list-dt:focus {
     color: #000000
 }
 
-#progressbar #confirm:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-
-#progressbar #confirm1:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-#progressbar #confirm2:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-#progressbar #confirm3:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-#progressbar #confirm4:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-#progressbar #confirm5:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-#progressbar #confirm6:before {
-    font-family: FontAwesome;
-    content: "\f00c"
-}
-
 #progressbar li {
     list-style-type: none;
     font-size: 12px;
@@ -227,37 +198,46 @@ select.list-dt:focus {
     top: 25px;
     z-index: -1
 }
-#progressbar #account:before {
+#progressbar #question1:before {
     font-family: FontAwesome;
     content: "\f023"
 }
 
-#progressbar #personal:before {
+#progressbar #question2:before {
     font-family: FontAwesome;
     content: "\f007"
 }
+#progressbar #question3:before {
+    font-family: FontAwesome;
+    content: "\f00c"
+}
 
-#progressbar #payment:before {
+#progressbar #question4:before {
+    font-family: FontAwesome;
+    content: "\f00c"
+}
+#progressbar #question5:before {
+    font-family: FontAwesome;
+    content: "\f00c"
+}
+
+#progressbar #question6:before {
     font-family: FontAwesome;
     content: "\f09d"
 }
 
-#progressbar #confirm:before {
+#progressbar #question7:before {
     font-family: FontAwesome;
-    content: "\f00c"
+    content: "\f09d"
 }
 
-#progressbar #confirm1:before {
+#progressbar #question8:before {
     font-family: FontAwesome;
-    content: "\f00c"
+    content: "\f09d"
 }
-#progressbar #confirm2:before {
+#progressbar #question9:before {
     font-family: FontAwesome;
-    content: "\f00c"
-}
-#progressbar #confirm3:before {
-    font-family: FontAwesome;
-    content: "\f00c"
+    content: "\f09d"
 }
 
 #progressbar li.active:before,
@@ -296,8 +276,44 @@ select.list-dt:focus {
 }
 
 
+h1{
+    font-weight: 300;
+    margin: 0px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #444;
+    color: #fff;
+}
+.question{
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.answers {
+    margin-bottom: 20px;
+    text-align: left;
+    display: inline-block;
+}
+.answers label{
+    display: block;
+    margin-bottom: 10px;
+}
 
 
-
-
-
+.slide{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.active-slide{
+    opacity: 1;
+    z-index: 2;
+}
+.quiz-container{
+    position: relative;
+    height: 200px;
+    margin-top: 40px;
+}

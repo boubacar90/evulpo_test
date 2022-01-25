@@ -36,6 +36,7 @@ function getExerciseData() {
         //  console.log(response);
         // console.log(response.result.values);
         // for each question...
+        const stringItem = ['a','b','c','d','e','f']
         response.result.values.forEach((currentQuestion, questionNumber) => {
                 // variable to store the list of possible answers
                 if (questionNumber > 0) {
@@ -49,13 +50,13 @@ function getExerciseData() {
                     answerOptions.forEach((item, index) => {
                         // ...add an HTML radio button
                         answers.push(
-                            `<label>
-                              <input type="radio" name="question${questionNumber}" value="${index}">
-                              ${index} :
-                              ${item}
-                            </label>`
+                            `<div class="custom-control custom-radio ">
+                                    <input type="radio" class="custom-control-input" id="questionid${item}" name="question${questionNumber}"  value="${index}">
+                                    <label class="custom-control-label" for="questionid${item}">   ${stringItem[index]} : ${item}</label>
+                                </div>`
                         );
-                    })
+
+                     })
                     // add this question and its answers to the output
                     output.push(
                         `<div class="slide">
@@ -63,59 +64,23 @@ function getExerciseData() {
                             <div class="answers"> ${answers.join("")} </div>
                           </div>`
                     );
+
                 }
 
             }
         );
         // finally combine our output list into one string of HTML and put it on the page
         document.getElementById("quiz").innerHTML += output.join('');
+
     }, function (response) {
         console.log('Error: ' + response.result.error.message);
     });
 }
 
 
-function showResults(){
-    // gather answer containers from our quiz
-    const answerContainers = quizContainer.querySelectorAll('.answers');
-
-    // keep track of user's answers
-    let numCorrect = 0;
-
-    // for each question...
-    myQuestions.forEach( (currentQuestion, questionNumber) => {
-
-        // find selected answer
-        const answerContainer = answerContainers[questionNumber];
-        const selector = `input[name=question${questionNumber}]:checked`;
-        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-        // if answer is correct
-        if(userAnswer === currentQuestion.correctAnswer){
-            // add to the number of correct answers
-            numCorrect++;
-
-            // color the answers green
-            answerContainers[questionNumber].style.color = 'lightgreen';
-        }
-        // if answer is wrong or blank
-        else{
-            // color the answers red
-            answerContainers[questionNumber].style.color = 'red';
-        }
-    });
-
-    // show number of correct answers out of total
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-}
-
-function myEvaluation(){
-    console.log('an evaluation function place holder')
-}
-
 setTimeout(function (){
 
-    $(".nextId").click(function () {
+    $(".nextStep").click(function () {
         showNextSlide();
     });
 
@@ -126,18 +91,72 @@ setTimeout(function (){
     function toggleChoice(index) {
         slides[currentSlide].classList.remove('active-slide');
         slides[index].classList.add('active-slide');
-        progressBB[index].classList.add('active');
+        linkbar[index].classList.add('active');
         currentSlide = index;
     }
     function showNextSlide() {
         toggleChoice(currentSlide + 1);
     }
     const slides = document.querySelectorAll(".slide");
-    const progressBB = document.querySelectorAll(".progressBB");
-    let currentSlide = 1;
+    const linkbar = document.querySelectorAll(".linkbar");
+    let currentSlide = 0;
     toggleChoice(currentSlide);
+
+
+
     // Event listeners
-    submitButton.addEventListener('click', showResults);
+   // submitButton.addEventListener('click', showResults);
 },2000);
+
+
+
+
+
+function myEvaluation(){
+    // Variables
+    // gather answer containers from our quiz
+    const quizContainer = document.getElementById('quiz');
+    const answerContainers = quizContainer.querySelectorAll('.answers');
+    console.error(answerContainers,'okay boo');
+    // keep track of user's answers
+    let numCorrect = 0;
+    gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: '1hzA42BEzt2lPvOAePP6RLLRZKggbg0RWuxSaEwd5xLc',
+        range: 'Learning!A1:F10',
+    }).then(function (response) {
+        response.result.values.forEach((currentQuestion, questionNumber) => {
+                // variable to store the list of possible answers
+                if (questionNumber > 0) {
+                    var  checkedRadio = document.querySelector(`input[name=question${questionNumber}]:checked`);
+                    if(checkedRadio == null){
+                        alert('Please choose an answer !!!');
+                    }
+                    const userAnswer =   checkedRadio.value;
+                    // if answer is correct
+
+                    if(userAnswer === currentQuestion[4]){
+                        // add to the number of correct answers
+                        numCorrect++;
+                        console.error('yes');
+                        // color the answers green
+                        answerContainers[questionNumber].style.color = 'lightgreen';
+                    }
+                    // if answer is wrong or blank
+                    else{
+                        // color the answers red
+                        console.error('no');
+                        answerContainers[questionNumber].style.color = 'red';
+                    }
+                }
+            }
+        );
+
+    }, function (response) {
+        console.log('Error: ' + response.result.error.message);
+    });
+
+    // show number of correct answers out of total
+    // resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+}
 
 
