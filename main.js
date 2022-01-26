@@ -54,6 +54,7 @@ function getExerciseData() {
     }).then(function (response) {
         //  console.log(response);
         // console.log(response.result.values);
+        //array index redefine
         const stringItem = ['a', 'b', 'c', 'd', 'e', 'f'];
         let dataFilter = Object.values(response.result.values).filter(function (e) {
             return e[0] != 'topic';
