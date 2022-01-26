@@ -1,13 +1,13 @@
 # evulpo_test
 Single Choice Exercise Viewer
 
-#Run the projet server
+# Run the projet server
 http-server -p 8000 
 http://127.0.0.1:8000
 
 The code in this article uses modern JavaScript syntax (ES6+),
 
-#The Basic Structure
+# The Basic Structure
 To set up the structure of our JavaScript quiz, we’ll need to start with the following HTML:
 ![img_3.png](img_3.png)
 
@@ -24,7 +24,7 @@ Here’s what that CSS might look like:
 ![img_5.png](img_5.png)
 
 
-#Screens test
+# Screens test
 ![img_2.png](img_2.png)
 
 
