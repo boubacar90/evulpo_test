@@ -10,7 +10,7 @@ let options;
 let states = [];
 let correct_answer_index;
 let chosen_answer_index;
-
+let currentSlide;
 // Variables
 function handleClientLoad() {
     gapi.load('client', initClient);
@@ -26,13 +26,13 @@ function initClient() {
         console.log(JSON.stringify(error, null, 2));
     });
 }
+
 function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-    console.log('array', array);
+    let currentIndex = array.length, randomIndex;
+    exerciseIndex = currentIndex -1;
     // While there remain elements to shuffle...
     while (currentIndex != 0) {
         // Pick a remaining element...
-        console.log('currentIndex', currentIndex);
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
         // And swap it with the current element.
@@ -56,41 +56,38 @@ function getExerciseData() {
         // for each question...
         const stringItem = ['a', 'b', 'c', 'd', 'e', 'f'];
         let dataFilter = Object.values(response.result.values).filter(function (e) {
-            console.log('booo',e);
+            console.log('booo', e);
             return e[0] != 'topic';
         });
-        exerciseData =  shuffle(dataFilter) ;
+        exerciseData = shuffle(dataFilter);
         exerciseData.forEach((currentQuestion, questionNumber) => {
                 // variable to store the list of possible answers
-                    const answers = [];
-                    var object = Object.fromEntries(Object.entries(currentQuestion).map(([key, value]) => [response.result.values[0][key], value]));
+                const answers = [];
+                var object = Object.fromEntries(Object.entries(currentQuestion).map(([key, value]) => [response.result.values[0][key], value]));
 
-                    console.log(object, questionNumber);
-                    var answerOptions = object.answerOptions.split(";");
-                    Array.from(answerOptions);
-                    Object.assign([], answerOptions);
-                    // and for each available answer...
-                    answerOptions.forEach((item, index) => {
-                        // ...add an HTML radio button
-                        answers.push(
-                            `<div class="custom-control custom-radio ">
+                console.log(object, questionNumber);
+                var answerOptions = object.answerOptions.split(";");
+                Array.from(answerOptions);
+                Object.assign([], answerOptions);
+                // and for each available answer...
+                answerOptions.forEach((item, index) => {
+                    // ...add an HTML radio button
+                    answers.push(
+                        `<div class="custom-control custom-radio ">
                                     <input type="radio" class="custom-control-input" id="questionid${item}" name="question${questionNumber}"  value="${index}">
                                     <label class="custom-control-label" for="questionid${item}">   ${stringItem[index]} : ${item}</label>
                                 </div>`
-                        );
+                    );
 
-                    })
-                    // add this question and its answers to the output
-                    output.push(
-                        `<div class="slide">
+                })
+                // add this question and its answers to the output
+                output.push(
+                    `<div class="slide">
                             <div class="text">Topic :  ${object.topic} </div>
                             <div class="question"> ${object.question} </div>
                             <div class="answers"> ${answers.join("")} </div>
                           </div>`
-                    );
-
-
-
+                );
             }
         );
         // finally combine our output list into one string of HTML and put it on the page
@@ -113,51 +110,61 @@ setTimeout(function () {
         slides[index].classList.add('active-slide');
         linkbar[index].classList.add('active');
         currentSlide = index;
+        if(exerciseIndex <= currentSlide){
+            document.querySelectorAll(".nextStep").forEach(a=>a.style.display = "none");
+        }
+
     }
+
     function showNextSlide() {
         toggleChoice(currentSlide + 1);
     }
 
     const slides = document.querySelectorAll(".slide");
     const linkbar = document.querySelectorAll(".linkbar");
-    let currentSlide = 0;
+    currentSlide = 0;
     toggleChoice(currentSlide);
 }, 2000);
 
-
 function myEvaluation() {
     // gather answer containers from our quiz
-    const quizContainer = document.getElementById('quiz');
-    const answerContainers = quizContainer.querySelectorAll('.answers');
     const bar = document.querySelectorAll(".linkbar");
     // keep track of user's answers
     let numCorrect = 0;
-    console.log(exerciseData);
     exerciseData.forEach((currentQuestion, questionNumber) => {
             // variable to store the list of possible answers
-
-                var checkedRadio = document.querySelector(`input[name=question${questionNumber}]:checked`);
-                // if answer is correct
+            var checkedRadio = document.querySelector(`input[name=question${questionNumber}]:checked`);
+            // if answer is correct
+            if (checkedRadio != null) {
                 if (checkedRadio.value === currentQuestion[4]) {
                     // add to the number of correct answers
                     numCorrect += parseInt(currentQuestion[5]);
-                   // console.error('yes');
-                    document.getElementById("results").innerHTML ='Score :'+numCorrect;
+                    // console.error('yes');
+                    document.getElementById("results").innerHTML = 'Score :' + numCorrect;
                     // color the answers green
-                    //answerContainers[questionNumber].style.color = 'lightgreen';
                 }
                 // if answer is wrong or blank
                 else {
                     // color the answers red
-                   // console.error('no');
+                    // console.error('no');
                     bar[questionNumber].classList.remove('active');
-                    bar[questionNumber++].classList.add('wrongAnswer');
+                    bar[questionNumber].classList.add('wrongAnswer');
                     document.getElementById("results").innerHTML = 'Not right';
-                    //answerContainers[questionNumber].style.color = 'red';
                 }
+
+            }
 
         }
     );
+
+    if(exerciseIndex <= currentSlide){
+        document.querySelectorAll(".randomQuestion").forEach(a=>a.style.display = "inline-block");
+        document.querySelectorAll(".evaluation-message").forEach(a=>a.style.display = "inline-block");
+        document.querySelectorAll(".evaluate").forEach(a=>a.style.display = "none");
+        document.getElementById("results").innerHTML = 'Score :' + numCorrect;
+        document.getElementById("quiz").innerHTML = '' ;
+        document.getElementById("question").innerHTML = '' ;
+    }
 
 }
 

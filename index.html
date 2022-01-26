@@ -18,8 +18,7 @@
 <body>
 
 <!-- MultiStep Form -->
-<div class="container-fluid" id="">
-
+<div class="container-fluid">
     <div class="row justify-content-center mt-0">
         <div class="col-11 text-center p-0 mt-3 mb-2">
             <div class=" px-0 pt-4 pb-0 mt-3 mb-3">
@@ -40,21 +39,16 @@
                                 <li class="linkbar" id="question9"><strong></strong></li>
                             </ul>
                             <p id="question" class="question"> Which is the correct option? </p>
-
                             <div class="quiz-container">
                                 <div id="quiz"></div>
                             </div>
-                            <div id="options-wrapper">
-
-                            </div>
-                            <div class="pt-5" style="margin-top: 40px">
+                            <div id="options-wrapper"></div>
+                            <div class="pt-5">
                                 <input type="button" onclick="myEvaluation()" class="evaluate action-button" value="Evaluate"/>
-                                <input type="button" name="nextStep" class="nextStep action-button" value="Next Step"/>
-
-                                <div id="evaluation-message"></div>
+                                <input type="button" name="nextStep" class="nextStep action-button" value="Next Step" />
+                                <div id="evaluation-message"  style="display: none;"  >Bravo! You have completed 9 exercises !</div>
                                 <div id="results" class="result"></div>
-                                <button onClick="window.location.reload();" >Next random question</button>
-
+                                <button  class="randomQuestion btn btn-info"  onClick="window.location.reload();" style="display: none;" >Next random question</button>
                             </div>
                         </form>
                     </div>
