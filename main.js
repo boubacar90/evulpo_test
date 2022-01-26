@@ -28,14 +28,13 @@ function initClient() {
 }
 function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
-
+    console.log('array', array);
     // While there remain elements to shuffle...
     while (currentIndex != 0) {
-
         // Pick a remaining element...
+        console.log('currentIndex', currentIndex);
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
         // And swap it with the current element.
         [array[currentIndex], array[randomIndex]] = [
             array[randomIndex], array[currentIndex]];
@@ -56,12 +55,16 @@ function getExerciseData() {
         // console.log(response.result.values);
         // for each question...
         const stringItem = ['a', 'b', 'c', 'd', 'e', 'f'];
-        exerciseData = shuffle(Object.values(response.result.values)) ;
+        let dataFilter = Object.values(response.result.values).filter(function (e) {
+            console.log('booo',e);
+            return e[0] != 'topic';
+        });
+        exerciseData =  shuffle(dataFilter) ;
         exerciseData.forEach((currentQuestion, questionNumber) => {
                 // variable to store the list of possible answers
-                if (questionNumber > 0) {
                     const answers = [];
                     var object = Object.fromEntries(Object.entries(currentQuestion).map(([key, value]) => [response.result.values[0][key], value]));
+
                     console.log(object, questionNumber);
                     var answerOptions = object.answerOptions.split(";");
                     Array.from(answerOptions);
@@ -86,7 +89,7 @@ function getExerciseData() {
                           </div>`
                     );
 
-                }
+
 
             }
         );
@@ -132,7 +135,7 @@ function myEvaluation() {
     console.log(exerciseData);
     exerciseData.forEach((currentQuestion, questionNumber) => {
             // variable to store the list of possible answers
-            if (questionNumber > 0) {
+
                 var checkedRadio = document.querySelector(`input[name=question${questionNumber}]:checked`);
                 // if answer is correct
                 if (checkedRadio.value === currentQuestion[4]) {
@@ -148,11 +151,11 @@ function myEvaluation() {
                     // color the answers red
                    // console.error('no');
                     bar[questionNumber].classList.remove('active');
-                    bar[questionNumber].classList.add('wrongAnswer');
+                    bar[questionNumber++].classList.add('wrongAnswer');
                     document.getElementById("results").innerHTML = 'Not right';
                     //answerContainers[questionNumber].style.color = 'red';
                 }
-            }
+
         }
     );
 
