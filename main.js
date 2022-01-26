@@ -26,6 +26,24 @@ function initClient() {
         console.log(JSON.stringify(error, null, 2));
     });
 }
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
 
 function getExerciseData() {
 
@@ -38,8 +56,8 @@ function getExerciseData() {
         // console.log(response.result.values);
         // for each question...
         const stringItem = ['a', 'b', 'c', 'd', 'e', 'f'];
-        exerciseData = response.result.values;
-        response.result.values.forEach((currentQuestion, questionNumber) => {
+        exerciseData = shuffle(Object.values(response.result.values)) ;
+        exerciseData.forEach((currentQuestion, questionNumber) => {
                 // variable to store the list of possible answers
                 if (questionNumber > 0) {
                     const answers = [];
