@@ -11,6 +11,7 @@ let states = [];
 let correct_answer_index;
 let chosen_answer_index;
 let currentSlide;
+
 // Variables
 function handleClientLoad() {
     gapi.load('client', initClient);
@@ -29,7 +30,7 @@ function initClient() {
 
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
-    exerciseIndex = currentIndex -1;
+    exerciseIndex = currentIndex - 1;
     // While there remain elements to shuffle...
     while (currentIndex != 0) {
         // Pick a remaining element...
@@ -53,19 +54,17 @@ function getExerciseData() {
     }).then(function (response) {
         //  console.log(response);
         // console.log(response.result.values);
-        // for each question...
         const stringItem = ['a', 'b', 'c', 'd', 'e', 'f'];
         let dataFilter = Object.values(response.result.values).filter(function (e) {
-            console.log('booo', e);
             return e[0] != 'topic';
         });
         exerciseData = shuffle(dataFilter);
+        // for each question...
         exerciseData.forEach((currentQuestion, questionNumber) => {
                 // variable to store the list of possible answers
                 const answers = [];
                 var object = Object.fromEntries(Object.entries(currentQuestion).map(([key, value]) => [response.result.values[0][key], value]));
-
-                console.log(object, questionNumber);
+                console.log(object);
                 var answerOptions = object.answerOptions.split(";");
                 Array.from(answerOptions);
                 Object.assign([], answerOptions);
@@ -110,8 +109,8 @@ setTimeout(function () {
         slides[index].classList.add('active-slide');
         linkbar[index].classList.add('active');
         currentSlide = index;
-        if(exerciseIndex <= currentSlide){
-            document.querySelectorAll(".nextStep").forEach(a=>a.style.display = "none");
+        if (exerciseIndex <= currentSlide) {
+            document.querySelectorAll(".nextStep").forEach(a => a.style.display = "none");
         }
 
     }
@@ -157,13 +156,13 @@ function myEvaluation() {
         }
     );
 
-    if(exerciseIndex <= currentSlide){
-        document.querySelectorAll(".randomQuestion").forEach(a=>a.style.display = "inline-block");
-        document.querySelectorAll(".evaluation-message").forEach(a=>a.style.display = "inline-block");
-        document.querySelectorAll(".evaluate").forEach(a=>a.style.display = "none");
+    if (exerciseIndex <= currentSlide) {
+        document.querySelectorAll(".randomQuestion").forEach(a => a.style.display = "inline-block");
+        document.querySelectorAll(".evaluation-message").forEach(a => a.style.display = "inline-block");
+        document.querySelectorAll(".evaluate").forEach(a => a.style.display = "none");
         document.getElementById("results").innerHTML = 'Score :' + numCorrect;
-        document.getElementById("quiz").innerHTML = '' ;
-        document.getElementById("question").innerHTML = '' ;
+        document.getElementById("quiz").innerHTML = '';
+        document.getElementById("question").innerHTML = '';
     }
 
 }
