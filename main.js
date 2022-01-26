@@ -163,7 +163,7 @@ function myEvaluation() {
         document.querySelectorAll(".evaluate").forEach(a => a.style.display = "none");
         document.getElementById("results").innerHTML = 'Score :' + numCorrect;
         document.getElementById("quiz").innerHTML = '';
-        document.getElementById("question").innerHTML = '';
+        document.getElementById("question").innerHTML = 'Bravo! You have completed 9 exercises !';
     }
 
 }
