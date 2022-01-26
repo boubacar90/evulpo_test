@@ -29,4 +29,4 @@ Here’s what that CSS might look like:
 
 
 
-![img_1.png](img_1.png)
+![img_6.png](img_6.png)
